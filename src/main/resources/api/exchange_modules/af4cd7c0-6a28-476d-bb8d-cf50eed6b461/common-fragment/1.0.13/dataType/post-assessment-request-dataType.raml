@@ -1,0 +1,16 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  recordAssessmnetRequest:
+    required: true
+    type: object
+    properties:
+      userDetails:
+        required: true
+        type: !include user-details-dataType.raml
+      assessmentdetails:
+        required: true
+        type: !include assessment-details-qa-dataType.raml
+      submitionDateTime:
+        required: true
+        type: !include submission-datetime-dataType.raml

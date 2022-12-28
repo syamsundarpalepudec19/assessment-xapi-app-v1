@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"  xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="post-assessment-details" doc:id="a5ce943d-f692-4306-a2a4-052a11ae625a" >
+		<logger level="INFO" doc:name="Request Post Assessment PAPI  Logger" doc:id="027b9b92-c788-41b2-88a2-22f10bb9df64" message="#[%dw 2.0 &#10;output application/json indent = false &#10;--- &#10;{ 	&#10;    TimeStamp: now(), &#10;    transactionId: vars.requestMessage.attributes.headers.'x-fms-transactionid',&#10;    AppName: app.name, 	&#10;    FlowName: flow.name, 	&#10;    BusinessProcessName:  &quot;Get Assessment Details&quot;,	&#10;    Category:  &quot;Fund Management&quot;, &#10;    OriginatingApplication:  &quot;Exprience API&quot;, 	&#10;    DesinationApplication:  &quot;GET Assessment SAPI&quot;, 	&#10;    CustomerId: &quot;NA&quot;, 	&#10;    txnState:  &quot;Request SAPI&quot; &#10;}]" />
+		<http:request method="POST" doc:name="Request Get Assessment PAPI" doc:id="3ab09d63-61e0-4df1-9451-913c2fe9459e" config-ref="HTTP_Request_configuration_Assessment_PAPI" path="${papi.path.assessment}" responseTimeout="9000000">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"x-fms-clientId" : vars.requestMessage.attributes.headers.'x-fms-clientId',
+	"x-fms-transactionId" : vars.requestMessage.attributes.headers.'x-fms-transactionId',
+	"x-fms-clientSecret" : vars.requestMessage.attributes.headers.'x-fms-clientSecret'
+}]]]></http:headers>
+		</http:request>
+		<logger level="INFO" doc:name="Response Post Assessment PAPI Logger" doc:id="2d1fac81-29d4-4e1e-bd4e-afe8d34b1805" message="#[%dw 2.0 &#10;output application/json indent = false &#10;--- &#10;{ 	&#10;    TimeStamp: now(), &#10;    transactionId: vars.requestMessage.attributes.headers.'x-fms-transactionid',&#10;    AppName: app.name, 	&#10;    FlowName: flow.name, 	&#10;    BusinessProcessName:  &quot;Get Assessment Details&quot;,	&#10;    Category:  &quot;Fund Management&quot;, &#10;    OriginatingApplication:  &quot;Exprience API&quot;, 	&#10;    DesinationApplication:  &quot;GET Assessment SAPI&quot;, 	&#10;    CustomerId: &quot;NA&quot;, 	&#10;    txnState:  &quot;Response SAPI&quot; &#10;}]" />
+	
+</sub-flow>
+</mule>

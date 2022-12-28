@@ -1,0 +1,52 @@
+#%RAML 1.0
+title: assessment-xapi-raml
+version: 1.0.0
+protocols:
+  - HTTP
+  - HTTPS
+description: This Raml is for assessment sapi API
+uses:
+  common-library: exchange_modules/af4cd7c0-6a28-476d-bb8d-cf50eed6b461/common-fragment/1.0.13/common-library-fragment.raml
+types:
+  get-assessment-report-response: !include /dataType/get-assessment-report-response-dataType.raml
+/assessments:
+  description: This resource is used for assesment to check fund eligibality and submit fund eligibality assessment.
+  get:
+    description: This API will retrieve set of questions answer from salesforce system.
+    is:
+      - common-library.common-header
+      - common-library.common-error-response
+    responses:
+      200:
+        body:
+          application/json:
+            type: common-library.get-assessment-response
+            example: !include /example/get-assessment-response-example.json
+  post:
+    description: This API will submit assessment report  to salesforce system.
+    is:
+      - common-library.common-header
+      - common-library.common-error-response
+    body:
+      application/json:
+        type: common-library.post-assessment-request
+        example: !include /example/post-assessment-request-example.json                  
+    responses:
+      201:
+        body:
+          application/json:
+            type: common-library.post-assessment-response
+            example: !include /example/post-assessment-response-example.json
+  /reports:
+    /{customerId}:
+      get:
+        description: This API will retrive set of questions answers from salesforce system.
+        is:
+          -  common-library.common-header
+          - common-library.common-error-response
+        responses:
+          200:
+            body:
+              application/json:
+                type: get-assessment-report-response
+                example: !include /example/get-assessment-report-response-example.json

@@ -1,0 +1,13 @@
+{
+  "assessmnetReportResponse": {
+    "userDetails": {
+      "userId": "REG1001",
+      "name": "Kumar"
+    },
+    "assessmentdetails": 
+    {
+      "result" : 90
+    },
+    "submitionDateTime": "01-03-2022T12:20:30"
+  }
+}
